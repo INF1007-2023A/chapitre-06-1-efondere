@@ -91,3 +91,4 @@ if __name__ == '__main__':
         loader = unittest.TestLoader()
         suite = loader.loadTestsFromModule(sys.modules[__name__])
         unittest.TextTestRunner(f, verbosity=2).run(suite)
+    print(open('logs/tests_results.txt', 'r').read())

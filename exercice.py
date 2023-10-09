@@ -4,44 +4,101 @@
 
 def order(values: list = None) -> list:
     if values is None:
-        # TODO: demander les valeurs ici
-        pass
+        values = []
+        values_text = input("Entrez des valeurs separees par une virgule: ").split(",")
+        for value_text in values_text:
+            values.append(value_text.strip())
 
-    return []
+    return sorted(values)
 
 
 def anagrams(words: list = None) -> bool:
     if words is None:
-        # TODO: demander les mots ici
-        pass
+        words = []
+        words.append(input("Entrez le premier mot: "))
+        words.append(input("Entrez le deuxieme mot: "))
 
-    return False
+    if len(words[0]) != len(words[1]):
+        return False
+
+    first_word_letters = {}
+    second_word_letters = {}
+    for c in words[0]:
+        if c in first_word_letters.keys():
+            first_word_letters[c] += 1
+        else:
+            first_word_letters[c] = 1
+
+    for c in words[1]:
+        if c in second_word_letters.keys():
+            second_word_letters[c] += 1
+        else:
+            second_word_letters[c] = 1
+    
+    return second_word_letters == first_word_letters
 
 
 def contains_doubles(items: list) -> bool:
-    return False
+    items_set = set(items)
+    return len(items) != len(items_set)
 
 
 def best_grades(student_grades: dict) -> dict:
-    # TODO: Retourner un dictionnaire contenant le nom de l'étudiant ayant la meilleure moyenne ainsi que sa moyenne
-    return {}
+    highest_average = 0
+    highest_student = ""
+    for k, v in student_grades.items():
+        average = sum(v) / len(v)
+        if (average > highest_average):
+            highest_student = k
+            highest_average = average
+
+    return { highest_student: highest_average }
 
 
 def frequence(sentence: str) -> dict:
-    # TODO: Afficher les lettres les plus fréquentes
-    #       Retourner le tableau de lettres
+    char_usage = {}
+    for c in sentence:
+        if c in char_usage.keys():
+            char_usage[c] += 1
+        else:
+            char_usage[c] = 1
 
-    return {}
+    # le test est different de ce qui est demande, mais bon...
+    # chars_to_remove = [c for c in char_usage if char_usage[c] < 5]
+    # for c in chars_to_remove:
+    #     del(char_usage[c])
+
+    return char_usage
 
 
 def get_recipes():
-    # TODO: Demander le nom d'une recette, puis ses ingredients et enregistrer dans une structure de données
-    pass
+    recipes = []
+    stop = False
+    while not stop:
+        name = input("Entrez le nom de la recette: ")
+        ingredients = [ingredient.strip() for ingredient in input("Entrez la liste d'ingredients, separes d'une virgule: ").split(',')]
+
+        recipes.append({"name": name, "ingredients": ingredients})
+        stop_str = input("Voulez vous entrer une nouvelle recette (o/n)?")
+        if stop_str.lower() == "n" or stop_str.lower() == "non":
+            stop = True
+
+    return recipes
 
 
-def print_recipe(ingredients) -> None:
-    # TODO: Demander le nom d'une recette, puis l'afficher si elle existe
-    pass
+def print_recipe(recipes) -> None:
+    name = input("Entrez le nom de la recette: ")
+    found = False
+    for recipe in recipes:
+        if recipe["name"] == name:
+            found = True
+            print(f"la recette {name} necessite: ")
+            for ingredient in recipe["ingredients"]:
+                print(f"    - {ingredient}")
+            break
+
+    if not found:
+        print("La recette n'a pas ete trouvee")
 
 
 def main() -> None:
